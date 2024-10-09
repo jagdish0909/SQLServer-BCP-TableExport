@@ -39,9 +39,10 @@ Before running the script, you need to configure the following variables within 
 **password:** The password for the SQL Server connection.
 **databasename:** The default database for the initial connection (set to master).
 
+```bash
 servername = "hostname"
 userid = "Admin"
 password = "yourpassword"
 databasename = "master"
-
+```
 
