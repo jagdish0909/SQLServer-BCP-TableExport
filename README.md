@@ -25,7 +25,7 @@ You can install the required libraries using the following command:
 
 ```bash
 pip install pyodbc pandas
-
+```
 
 **SQL Server**: SQL Server must be running and accessible with appropriate credentials.
 
