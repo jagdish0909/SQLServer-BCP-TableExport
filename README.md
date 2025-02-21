@@ -1,48 +1,60 @@
-# bcp_with_python
-Export SQL Server tables from list from databases dynamically with human intervention in the code.
+# SQL Server Database Exporter
 
-BCP stands for Bulk copy program. this is Micorsoft utility which is build for expoirting and importing data in sql server parallelly.
-
-
-# SQL Server Table Export Script
-
-## Overview
-
-This Python script connects to a SQL Server instance, retrieves metadata information about the available databases and tables, and exports the tables into CSV files using the `BCP` (Bulk Copy Program) utility.
+This Python script allows you to export tables from a SQL Server database to CSV files using the `BCP` (Bulk Copy Program) utility. The script connects to a SQL Server instance, retrieves the list of tables from specified databases, and exports each table to a CSV file.
 
 ## Prerequisites
 
-To use this script, ensure that the following prerequisites are met:
+Before running the script, ensure you have the following:
 
-- **Python Version**: Python 3.x
-- **Python Libraries**:
-  - `pyodbc`: For connecting to SQL Server databases.
-  - `pandas`: For data manipulation and handling SQL query results.
-  - `subprocess`: For running system commands (used for executing `BCP`).
-  - `datetime`: For generating date-based filenames.
+1. **Python 3.x** installed on your machine.
+2. **pyodbc** library installed. You can install it using pip:
+   ```bash
+   pip install pyodbc
+3. pandas library installed. You can install it using pip:
+   ```bash
+   pip install pandas
+4. BCP utility installed and accessible from the command line. BCP is typically included with SQL Server installations
+   
+## Configuration
+Before running the script, you need to configure the following variables in the script:
+  **servername:** The hostname or IP address of your SQL Server instance.
+  **userid:** The username for SQL Server authentication.
+  **password:** The password for SQL Server authentication.
+  **databasename:** The name of the database you want to connect to initially.
 
-You can install the required libraries using the following command:
+## Functions
+  **getRoster()**
+  This function retrieves the list of tables from the INFORMATION_SCHEMA.TABLES view for the specified database.
 
-```bash
-pip install pyodbc pandas
-```
+**gettables(dbname)**
+  This function retrieves the list of tables from the INFORMATION_SCHEMA.TABLES view for a given database (dbname).
 
-**SQL Server**: SQL Server must be running and accessible with appropriate credentials.
+## ExportTables()
+  This function exports all tables from the databases listed in the SQL_DB DataFrame to CSV files. The CSV files are saved in the
+       C:\\Users\\bcpexport\\ directory with filenames in the format {database}_{schema_table}_{date}.csv.
+  
+  main()
+  The main function that initializes the connection to the SQL Server and calls the ExportTables() function.
 
-**BCP Utility**: The BCP utility must be installed and available in the system's PATH. You can download it from the official Microsoft site or as part of SQL Server tools.
+## Usage
+  1. Clone the repository or download the script.
+  2. Configure the script with your SQL Server credentials and database details.
+  3. Run the script using Python:
+       ```bash
+         python script_name.py
+  4. The script will export all tables from the specified databases to CSV files in the C:\\Users\\bcpexport\\ directory.
 
-# Configuration
-Before running the script, you need to configure the following variables within the script:
+## Example
+  1. servername = "your_server_name"
+  2. userid = "your_username"
+  3. password = "your_password"
+  4. databasename = "your_database_name"
 
-**servername:** The hostname or IP address of your SQL Server instance.
-**userid:** The username to connect to SQL Server.
-**password:** The password for the SQL Server connection.
-**databasename:** The default database for the initial connection (set to master).
+## Output
+The script will generate CSV files for each table in the specified databases. The filenames will follow the format:
+  C:\Users\bcpexport\{database}_{schema_table}_{date}.csv
 
-```bash
-servername = "hostname"
-userid = "Admin"
-password = "yourpassword"
-databasename = "master"
-```
-
+## Notes
+  Ensure that the BCP utility is properly configured and accessible from the command line.
+  The script uses SQL Server authentication. If you are using Windows Authentication, you may need to modify the connection string.
+  The script assumes that the INFORMATION_SCHEMA.TABLES view is accessible and contains the necessary table information.
